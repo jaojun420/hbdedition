@@ -233,11 +233,37 @@ background:#b08d57;
 color:white;
 cursor:pointer;
 }
+  .videoLink{
+display:inline-block;
+margin-top:20px;
+padding:15px 25px;
+
+background:rgba(255,255,255,0.6);
+backdrop-filter:blur(10px);
+
+border-radius:15px;
+box-shadow:0 10px 25px rgba(0,0,0,0.1);
+
+font-family:'Great Vibes', cursive;
+font-size:28px;
+color:#b08d57;
+text-decoration:none;
+
+transition:0.3s;
+}
+
+.videoLink:hover{
+transform:scale(1.05);
+background:rgba(255,255,255,0.8);
+}
 
 </style>
 </head>
 
 <body>
+  <audio id="music" loop>
+  <source src="your-music.mp3" type="audio/mp3">
+</audio>
 
 <audio id="music" loop src="your-music.mp3"></audio>
 <audio id="clickSound" src="click.mp3"></audio>
@@ -271,10 +297,10 @@ cursor:pointer;
 
 <h2>🎥 My Favorite View</h2>
 
-<video controls autoplay>
-  <source src="video.mp4" type="video/mp4">
-</video>
-
+<a href="https://drive.google.com/file/d/1LfIMyITQ3CFkNWtm3f08fjTkaXzZFIeu/view?usp=drivesdk" target="_blank" class="videoLink">
+  Cutieee💖💖💖
+</a>
+  
 <h2>💌 Small Letter For Youuu...!!!</h2>
 <div class="letter" id="letter"></div>
 
@@ -355,15 +381,34 @@ setTimeout(()=>h.remove(),6000);
 }
 
 /* ===== 🎵 MUSIC CONTROL (GLOBAL + VIDEO SYNC) ===== */
-const music = document.getElementById("music");
+  const music = document.getElementById("music");
 
 function startMusic(){
-music.volume = 0.6;
-music.play().catch(()=> {
-document.body.addEventListener("click", ()=> music.play(), {once:true});
+music.volume = 0.7;
+
+// try autoplay
+let playPromise = music.play();
+
+if(playPromise !== undefined){
+playPromise.catch(()=>{
+// unlock on first click (browser rule)
+document.body.addEventListener("click", ()=>{
+music.play();
+}, { once:true });
 });
 }
+}
 
+function openGift(){
+document.getElementById("clickSound").play();
+document.getElementById("gift").style.display="none";
+document.getElementById("main").style.display="block";
+
+startMusic(); // 💖 THIS MAKES IT PLAY FULL STORY
+
+startHearts();
+startLetter();
+}
 /* VIDEO PAUSE MUSIC */
 const video = document.querySelector("iframe");
 
